@@ -1,0 +1,122 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UI Components Guide
+
+## Available shadcn/ui Components
+
+This project uses shadcn/ui with the "new-york" style as configured in [components.json](mdc:components.json).
+
+### Core Components
+Located in `@/components/ui/`:
+
+**Form & Input**
+- `button` - Primary UI button with variants
+- `input` - Text input field
+- `textarea` - Multi-line text input
+- `checkbox` - Checkbox input
+- `radio-group` - Radio button groups
+- `select` - Dropdown selection
+- `slider` - Range slider input
+- `switch` - Toggle switch
+- `form` - Form wrapper with validation
+- `label` - Form labels
+- `input-otp` - OTP/PIN input
+
+**Layout & Navigation**
+- `card` - Container component
+- `separator` - Visual divider
+- `accordion` - Collapsible content
+- `tabs` - Tab navigation
+- `breadcrumb` - Navigation breadcrumbs
+- `navigation-menu` - Complex navigation
+- `sidebar` - Side navigation panel
+- `menubar` - Menu bar component
+- `pagination` - Page navigation
+
+**Feedback & Overlay**
+- `dialog` - Modal dialogs
+- `sheet` - Slide-out panels
+- `drawer` - Mobile-friendly drawers
+- `alert` - Alert messages
+- `alert-dialog` - Confirmation dialogs
+- `toast` via `sonner` - Toast notifications
+- `tooltip` - Hover tooltips
+- `hover-card` - Rich hover content
+- `popover` - Floating content
+- `progress` - Progress indicators
+- `skeleton` - Loading placeholders
+
+**Data Display**
+- `table` - Data tables
+- `badge` - Status badges
+- `avatar` - User avatars
+- `calendar` - Date picker
+- `chart` - Data visualization
+- `carousel` - Image/content carousel
+- `command` - Command palette
+- `context-menu` - Right-click menus
+- `dropdown-menu` - Dropdown actions
+
+## Usage Patterns
+
+### Basic Component Import
+```typescript
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+```
+
+### Form Components with React Hook Form
+```typescript
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { z } from 'zod'
+```
+
+### Theme Integration
+Components automatically use CSS variables from [app/globals.css](mdc:app/globals.css):
+- `--background`, `--foreground`
+- `--primary`, `--primary-foreground`
+- `--secondary`, `--secondary-foreground`
+- `--muted`, `--muted-foreground`
+- `--accent`, `--accent-foreground`
+- `--destructive`, `--destructive-foreground`
+
+### Icon Usage
+Use Lucide React icons as configured:
+```typescript
+import { Search, Settings, User } from 'lucide-react'
+```
+
+## Component Customization
+
+### Variant Patterns
+Most components support variants using `class-variance-authority`:
+```typescript
+<Button variant="default">Default</Button>
+<Button variant="destructive">Delete</Button>
+<Button variant="outline">Cancel</Button>
+<Button variant="ghost">Subtle</Button>
+```
+
+### Size Variants
+```typescript
+<Button size="sm">Small</Button>
+<Button size="default">Default</Button>
+<Button size="lg">Large</Button>
+```
+
+### Custom Styling
+Use `cn()` utility for conditional classes:
+```typescript
+import { cn } from '@/lib/utils'
+
+<Button className={cn("custom-class", isActive && "bg-accent")}>
+  Button
+</Button>
+```

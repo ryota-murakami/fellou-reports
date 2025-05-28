@@ -1,0 +1,111 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Development Workflow
+
+## Available Scripts
+
+From [package.json](mdc:package.json):
+
+```bash
+# Development with Turbopack (faster builds)
+pnpm dev
+
+# Production build
+pnpm build
+
+# Start production server
+pnpm start
+
+# Lint code
+pnpm lint
+```
+
+## Development Best Practices
+
+### Hot Reload & Turbopack
+- Use `pnpm dev` for development with Turbopack enabled
+- Turbopack provides faster builds and hot reload
+- Changes to components, pages, and styles reload automatically
+
+### Code Quality
+- Run `pnpm lint` before committing
+- TypeScript strict mode is enabled - fix type errors
+- Use ESLint configuration from `eslint.config.mjs`
+
+### Component Development
+1. Create new components in appropriate directories:
+   - UI components: `components/ui/`
+   - Feature components: `components/`
+   - Page components: `app/`
+
+2. Follow naming conventions from coding standards
+3. Add proper TypeScript types
+4. Use shadcn/ui components when possible
+
+### Styling Workflow
+1. Use Tailwind utility classes first
+2. Leverage CSS variables from [app/globals.css](mdc:app/globals.css)
+3. Create custom components for complex patterns
+4. Test with both light and dark themes
+
+## Debugging Guidelines
+
+### Common Issues
+
+**Path Resolution Errors**
+- Verify imports use `@/` alias correctly
+- Check [tsconfig.json](mdc:tsconfig.json) path configuration
+
+**Hydration Mismatches**
+- Ensure Server Components don't use client-side APIs
+- Add `'use client'` only when necessary
+- Check for browser-specific code in Server Components
+
+**Styling Issues**
+- Verify Tailwind classes are correct
+- Check CSS variable usage
+- Ensure dark mode compatibility
+
+### Performance Optimization
+- Prefer Server Components for static content
+- Use dynamic imports for heavy client components
+- Optimize images with Next.js Image component
+- Monitor bundle size with build analysis
+
+## Testing Strategy
+
+### Manual Testing
+- Test on different screen sizes (responsive design)
+- Verify dark/light theme compatibility
+- Check keyboard navigation and accessibility
+- Test form validation and error states
+
+### Component Testing
+- Test component variants and props
+- Verify proper event handling
+- Check edge cases and error boundaries
+
+## Deployment Preparation
+
+### Build Checks
+```bash
+# Ensure clean build
+pnpm build
+
+# Check for type errors
+npx tsc --noEmit
+
+# Lint codebase
+pnpm lint
+```
+
+### Pre-deployment Checklist
+- [ ] All TypeScript errors resolved
+- [ ] ESLint warnings addressed
+- [ ] Components work in both themes
+- [ ] Responsive design tested
+- [ ] Performance optimized
+- [ ] Accessibility verified

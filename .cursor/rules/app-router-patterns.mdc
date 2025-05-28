@@ -1,0 +1,235 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Next.js App Router Patterns
+
+## Routing Structure
+
+This project uses Next.js 15 App Router exclusively (no Pages Router).
+
+### Current Route Structure
+```
+app/
+├── page.tsx                    # Home page
+├── layout.tsx                  # Root layout
+├── globals.css                 # Global styles
+├── favicon.ico                 # Favicon
+└── (reports)/                  # Route group
+    ├── electron-mac/           # Report: Electron Mac
+    ├── fellou-all-commands/    # Report: All Commands
+    │   └── page.tsx           # Report page
+    └── shadcn-with-daisyui/   # Report: shadcn + DaisyUI
+        └── page.tsx           # Report page
+```
+
+### Route Groups
+The `(reports)` directory is a route group that:
+- Organizes related routes without affecting URL structure
+- Allows shared layouts for report pages
+- Groups report-related functionality
+
+## File Conventions
+
+### Page Files
+```typescript
+// app/page.tsx - Home page
+export default function HomePage() {
+  return <div>Home</div>
+}
+
+// app/(reports)/report-name/page.tsx - Report page
+interface ReportPageProps {
+  params: { id?: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default function ReportPage({ params, searchParams }: ReportPageProps) {
+  return <div>Report Content</div>
+}
+```
+
+### Layout Files
+```typescript
+// app/layout.tsx - Root layout
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Fellou Reports',
+  description: 'Application description'
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+
+// app/(reports)/layout.tsx - Reports group layout
+export default function ReportsLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="reports-container">
+      <nav>Reports Navigation</nav>
+      {children}
+    </div>
+  )
+}
+```
+
+## Data Fetching Patterns
+
+### Server Components (Default)
+```typescript
+// Async Server Component with data fetching
+async function ReportPage() {
+  const data = await fetch('https://api.example.com/data')
+  const report = await data.json()
+  
+  return <div>{report.title}</div>
+}
+```
+
+### Client Components
+```typescript
+'use client'
+
+import { useState, useEffect } from 'react'
+
+function InteractiveReport() {
+  const [data, setData] = useState(null)
+  
+  useEffect(() => {
+    fetchData().then(setData)
+  }, [])
+  
+  return <div>Interactive content</div>
+}
+```
+
+### Server Actions
+```typescript
+'use server'
+
+export async function updateReport(formData: FormData) {
+  // Server-side logic
+  const title = formData.get('title')
+  // Update database
+  redirect('/reports')
+}
+```
+
+## Navigation Patterns
+
+### Link Components
+```typescript
+import Link from 'next/link'
+
+// Internal navigation
+<Link href="/reports/electron-mac">Electron Mac Report</Link>
+
+// Dynamic routes
+<Link href={`/reports/${reportId}`}>View Report</Link>
+```
+
+### Programmatic Navigation
+```typescript
+'use client'
+
+import { useRouter } from 'next/navigation'
+
+function NavigationComponent() {
+  const router = useRouter()
+  
+  const handleNavigation = () => {
+    router.push('/reports/new')
+  }
+  
+  return <button onClick={handleNavigation}>Create Report</button>
+}
+```
+
+## Metadata and SEO
+
+### Static Metadata
+```typescript
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Report Title',
+  description: 'Report description',
+  keywords: ['reports', 'analytics']
+}
+```
+
+### Dynamic Metadata
+```typescript
+interface Props {
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const report = await getReport(params.id)
+  
+  return {
+    title: report.title,
+    description: report.description
+  }
+}
+```
+
+## Error Handling
+
+### Error Pages
+```typescript
+// app/error.tsx - Global error boundary
+'use client'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={() => reset()}>Try again</button>
+    </div>
+  )
+}
+
+// app/not-found.tsx - 404 page
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+    </div>
+  )
+}
+```
+
+### Loading States
+```typescript
+// app/loading.tsx - Global loading UI
+export default function Loading() {
+  return <div>Loading...</div>
+}
+
+// app/(reports)/loading.tsx - Reports loading UI
+export default function ReportsLoading() {
+  return <div>Loading reports...</div>
+}
+```

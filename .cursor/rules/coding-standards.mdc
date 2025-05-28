@@ -1,0 +1,80 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Coding Standards
+
+## TypeScript Guidelines
+
+### Type Safety
+- Use strict TypeScript configuration as defined in [tsconfig.json](mdc:tsconfig.json)
+- Prefer explicit typing over `any`
+- Use type imports: `import type { ComponentProps } from 'react'`
+- Define prop types using interfaces or type aliases
+
+### Path Aliases
+Use the configured path aliases from [tsconfig.json](mdc:tsconfig.json):
+```typescript
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { useCustomHook } from '@/hooks/useCustomHook'
+```
+
+## React & Next.js Patterns
+
+### Client vs Server Components
+- Default to Server Components (no 'use client' directive)
+- Only add `'use client'` at the boundary component when:
+  - Using hooks (useState, useEffect, etc.)
+  - Handling user interactions
+  - Using browser-only APIs
+- Use `'use server'` for Server Actions
+
+### Component Structure
+```typescript
+// Server Component (default)
+interface PageProps {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default function Page({ params, searchParams }: PageProps) {
+  return <div>Server Component</div>
+}
+
+// Client Component (when needed)
+'use client'
+
+import { useState } from 'react'
+
+interface ClientComponentProps {
+  initialValue: string
+}
+
+export function ClientComponent({ initialValue }: ClientComponentProps) {
+  const [value, setValue] = useState(initialValue)
+  return <div>{value}</div>
+}
+```
+
+## Styling Guidelines
+
+### Tailwind CSS
+- Use Tailwind utility classes for styling
+- Leverage CSS variables defined in [app/globals.css](mdc:app/globals.css)
+- Use `cn()` utility from [lib/utils](mdc:lib/utils.ts) for conditional classes
+
+### shadcn/ui Components
+- Import UI components from `@/components/ui/*`
+- Follow shadcn/ui patterns and variants
+- Customize components using Tailwind and CSS variables
+
+## File Naming Conventions
+
+- **Pages**: `page.tsx` (App Router convention)
+- **Layouts**: `layout.tsx`
+- **Components**: PascalCase (e.g., `UserProfile.tsx`)
+- **Hooks**: camelCase starting with 'use' (e.g., `useAuth.ts`)
+- **Utilities**: camelCase (e.g., `formatDate.ts`)
+- **Types**: PascalCase with `.types.ts` suffix (e.g., `User.types.ts`)

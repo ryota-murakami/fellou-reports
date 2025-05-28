@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Overview
+
+Fellou Reports is a Next.js 15 application built with TypeScript and modern React patterns.
+
+## Tech Stack
+
+### Core Framework
+- **Next.js 15.3.2** with App Router (no Pages Router)
+- **React 19** with RSC (React Server Components)
+- **TypeScript 5** with strict configuration
+
+### UI & Styling
+- **shadcn/ui** components with "new-york" style
+- **Tailwind CSS 4** with CSS variables and neutral base color
+- **Radix UI** primitives for accessibility
+- **Framer Motion** for animations
+- **Lucide React** for icons
+
+### Key Dependencies
+- **React Hook Form** with Zod validation
+- **next-themes** for theme switching
+- **Recharts** for data visualization
+- **Sonner** for toast notifications
+
+## Project Structure
+
+The project follows Next.js App Router conventions:
+- `app/` - App Router pages and layouts
+- `app/(reports)/` - Route group for report pages
+- `components/ui/` - Reusable shadcn/ui components
+- `lib/` - Utility functions and configurations
+- `hooks/` - Custom React hooks
+- `public/` - Static assets
+
+## Important Files
+- [package.json](mdc:package.json) - Dependencies and scripts
+- [components.json](mdc:components.json) - shadcn/ui configuration
+- [tsconfig.json](mdc:tsconfig.json) - TypeScript configuration with path aliases
+- [app/layout.tsx](mdc:app/layout.tsx) - Root layout component
+- [app/globals.css](mdc:app/globals.css) - Global styles and CSS variables
