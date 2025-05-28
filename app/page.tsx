@@ -34,9 +34,16 @@ function ThemeProvider({
   storageKey = "fellou-reports-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  const [theme, setTheme] = React.useState<Theme>(defaultTheme);
+
+  // On mount, sync theme from localStorage if available
+  React.useEffect(() => {
+    const storedTheme = (typeof window !== "undefined" && localStorage.getItem(storageKey)) as Theme | null;
+    if (storedTheme && storedTheme !== theme) {
+      setTheme(storedTheme);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     const root = window.document.documentElement;
@@ -59,7 +66,9 @@ function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(storageKey, theme);
+      }
       setTheme(theme);
     },
   };
@@ -108,6 +117,7 @@ function GridPattern({ width, height, x, y, squares, ...props }: any) {
         <svg x={x} y={y} className="overflow-visible">
           {squares.map(([x, y]: any, index: number) => (
             <rect
+              suppressHydrationWarning
               strokeWidth="0"
               key={`${x}-${y}-${index}`}
               width={width + 1}
