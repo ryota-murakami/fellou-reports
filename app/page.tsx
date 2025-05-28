@@ -339,12 +339,18 @@ export default function Page() {
       href: "/fellou-all-commands",
       icon: <FileCode className="h-6 w-6 text-blue-500" />
     },
+    {
+      title: "Corepack完全ガイド",
+      description: "Node.jsのパッケージマネージャー管理ツールCorepackの使い方と設定方法。npm、yarn、pnpmの統一管理とプロジェクト環境構築のベストプラクティス。",
+      href: "/corepack",
+      icon: <FileCode className="h-6 w-6 text-teal-500" />
+    },
     // プレースホルダーとして追加のカード
     {
       title: "Coming Soon",
       description: "新しいレポートを準備中です。最新の技術トレンドや実装方法について詳しく解説予定。",
       href: "#",
-      icon: <FileCode className="h-6 w-6 text-teal-500" />
+      icon: <FileCode className="h-6 w-6 text-emerald-500" />
     },
   ];
   
