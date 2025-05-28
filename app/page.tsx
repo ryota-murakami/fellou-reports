@@ -323,6 +323,7 @@ export default function Page() {
     { label: "レポート", href: "#reports" },
     { label: "カテゴリー", href: "#categories" },
     { label: "検索", href: "#search" },
+    { label: "全コマンド", href: "/fellou-all-commands" },
   ];
   
   const pageLinks = [
@@ -332,13 +333,13 @@ export default function Page() {
       href: "/electron-mac",
       icon: <Monitor className="h-6 w-6 text-purple-500" />
     },
-    // プレースホルダーとして追加のカード
     {
-      title: "Coming Soon",
-      description: "新しいレポートを準備中です。最新の技術トレンドや実装方法について詳しく解説予定。",
-      href: "#",
+      title: "Fellou全コマンド解説",
+      description: "Fellouで使える全AIコマンドの機能・使い方・活用例を徹底解説。情報収集・要約・分析・プレゼン作成まで、すべてのコマンドを網羅。",
+      href: "/fellou-all-commands",
       icon: <FileCode className="h-6 w-6 text-blue-500" />
     },
+    // プレースホルダーとして追加のカード
     {
       title: "Coming Soon",
       description: "新しいレポートを準備中です。最新の技術トレンドや実装方法について詳しく解説予定。",
